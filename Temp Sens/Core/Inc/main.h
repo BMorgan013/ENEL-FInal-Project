@@ -60,6 +60,28 @@ void Error_Handler(void);
 /* USER CODE END EFP */
 
 /* Private defines -----------------------------------------------------------*/
+#define pH_Sensor_IN_Pin GPIO_PIN_0
+#define pH_Sensor_IN_GPIO_Port GPIOA
+#define PWM_Fans_Pin GPIO_PIN_1
+#define PWM_Fans_GPIO_Port GPIOA
+#define EC_Sensor_IN_Pin GPIO_PIN_4
+#define EC_Sensor_IN_GPIO_Port GPIOA
+#define Moisture_Sensor_IN_Pin GPIO_PIN_0
+#define Moisture_Sensor_IN_GPIO_Port GPIOB
+#define Mixing_OUT_Pin GPIO_PIN_8
+#define Mixing_OUT_GPIO_Port GPIOC
+#define Flood_Tray_OUT_Pin GPIO_PIN_9
+#define Flood_Tray_OUT_GPIO_Port GPIOC
+#define Doser_Water_OUT_Pin GPIO_PIN_8
+#define Doser_Water_OUT_GPIO_Port GPIOA
+#define Doser_Fertilizer_OUT_Pin GPIO_PIN_9
+#define Doser_Fertilizer_OUT_GPIO_Port GPIOA
+#define Doser_pH_DOWN_OUT_Pin GPIO_PIN_10
+#define Doser_pH_DOWN_OUT_GPIO_Port GPIOA
+#define Doser_pH_UP_OUT_Pin GPIO_PIN_11
+#define Doser_pH_UP_OUT_GPIO_Port GPIOA
+#define Level_Switch_IN_Pin GPIO_PIN_12
+#define Level_Switch_IN_GPIO_Port GPIOA
 /* USER CODE BEGIN Private defines */
 
 /* USER CODE END Private defines */
