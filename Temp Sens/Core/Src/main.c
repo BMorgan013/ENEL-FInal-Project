@@ -220,10 +220,33 @@ int main(void)
 	 HAL_Delay(1);
 	 }
 
+/**************************************/
+/*************MOTOR*******************/
+	 //temperature 18 and below, ensure shaders are open
+	 if(tCelsius <= 18)
+	{
+	 TIM3->CCR1 = 1000;
+	 HAL_Delay(1);
+	}
+	//temperature 25 and above, close shaders to help reduce temp
+	else if (tCelsius >= 25)
+	{
+	 TIM3->CCR2 = 1000;
+	 HAL_Delay(1);
+	}
+	//otherwise motors are off
+	else
+	{
+	TIM3->CCR1 = 0;
+	TIM3->CCR2 = 0;
+	HAL_Delay(1);
+	}
+
+/**********************************/
 /**********USART *****************/
 //HAL_UART_Transmit(&huart2, (uint8_t*) TC1, 8, 100);
 //HAL_GPIO_TogglePin(GPIOA, GPIO_PIN_2);
-  if(HAL_UART_Transmit(&huart2, "TEST ", 8, 10000) != HAL_OK)
+  //if(HAL_UART_Transmit(&huart2, "TEST ", 8, 10000) != HAL_OK)
 	  Error_Handler();
 
  // HAL_UART_Receive(&huart2, data, sizeof(data), 1000);
@@ -231,14 +254,7 @@ int main(void)
   }
     /* USER CODE END WHILE */
 
-    /* USER CODE BEGIN 3 */
-   /* US
-  htim2.Instance->CCR1 = 50;
-  HAL_Delay (2000);
-
-  htim2.Instance->CCR1 = 70;
-  HAL_Delay (2000);
-
+   /* USER CODE BEGIN 3 */
   /* USER CODE END 3 */
 }
 
