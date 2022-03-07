@@ -68,8 +68,6 @@ void Error_Handler(void);
 #define EC_Sensor_IN_GPIO_Port GPIOA
 #define Moisture_Sensor_IN_Pin GPIO_PIN_0
 #define Moisture_Sensor_IN_GPIO_Port GPIOB
-#define Mixing_OUT_Pin GPIO_PIN_8
-#define Mixing_OUT_GPIO_Port GPIOC
 #define Flood_Tray_OUT_Pin GPIO_PIN_9
 #define Flood_Tray_OUT_GPIO_Port GPIOC
 #define Doser_Water_OUT_Pin GPIO_PIN_8
@@ -82,6 +80,16 @@ void Error_Handler(void);
 #define Doser_pH_UP_OUT_GPIO_Port GPIOA
 #define Level_Switch_IN_Pin GPIO_PIN_12
 #define Level_Switch_IN_GPIO_Port GPIOA
+#define Light_Sensor_IN_Pin GPIO_PIN_3
+#define Light_Sensor_IN_GPIO_Port GPIOB
+#define PWM_Motor_Forward_Pin GPIO_PIN_4
+#define PWM_Motor_Forward_GPIO_Port GPIOB
+#define PWM_Motor_Reverse_Pin GPIO_PIN_5
+#define PWM_Motor_Reverse_GPIO_Port GPIOB
+#define PWM_Lights_Pin GPIO_PIN_6
+#define PWM_Lights_GPIO_Port GPIOB
+#define Temp_Hum_OUT_Pin GPIO_PIN_9
+#define Temp_Hum_OUT_GPIO_Port GPIOB
 /* USER CODE BEGIN Private defines */
 
 /* USER CODE END Private defines */
