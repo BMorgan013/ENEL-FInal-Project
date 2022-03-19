@@ -1,8 +1,9 @@
 /*
  * adc_3channels.c
  *
- *  Created on: Mar 6, 2022
  *      Author: Don de Jesus - 200246283
+ *      This code is responsible for handling the values that are read through the 3 analog channels
+ *      we're using for the pH sensor, EC sensor, and moisture sensor
  */
 
 #include "adc_3channels.h"
