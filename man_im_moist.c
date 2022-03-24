@@ -6,6 +6,9 @@
  */
 
 #include "man_im_moist.h"
+float moisture_level = 0.0; //moisture comparison variable
+uint16_t dry_boundary = 2500;
+uint16_t saturated_boundary = 2100;
 
 void flood_ON(void) //sets pc9, turning on the feed tank pump
 {
@@ -30,21 +33,20 @@ void be_not_like_water(void) //pc8 is your gpio port for this
 float moisture_sense(void) //moisture sensing pb0, returns whatever pb0 is seeing
 {
 	float moisture = 0;
-	moisture = ((ADC_Average(2)*3.3)/4096); //averages 10 entries of the moisture sensor
+	moisture = ADC_Average(2); //averages 10 entries of the moisture sensor
 	return moisture; //returns the moisture level
 }
 
 void flood_logic(void) //turn on flood pump if moisture needed
 {
-	float MOIST = 0; //moisture comparison variable
-	MOIST = moisture_sense(); //check the moisture level
-	if(MOIST > 2500) //if it's super dry
+	moisture_level = moisture_sense(); //check the moisture level
+	if(moisture_level > dry_boundary) //if it's super dry
 	{
 		flood_ON(); //turn on the flood pump
-		while(MOIST > 2500) //keeps checking the moisture level
+		while(!(moisture_level < saturated_boundary)) //while the plant isn't wet enough
 		{
-			MOIST = moisture_sense();
 			//if the code is in this loop, then the flood pump will be providing water
+			moisture_level = moisture_sense();
 		}
 		flood_OFF();
 	}

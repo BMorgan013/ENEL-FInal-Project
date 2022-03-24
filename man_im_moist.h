@@ -15,6 +15,7 @@ extern "C" {
 #include "stm32f1xx_hal.h"
 #include "main.h"
 #include "adc_3channels.h"
+#include "chem_system.h"
 
 void flood_ON(void); //turns on the flood pump PC9
 void flood_OFF(void); //turns off the flood pump
