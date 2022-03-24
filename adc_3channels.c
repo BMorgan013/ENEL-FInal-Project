@@ -92,7 +92,7 @@ void ADC_Select_CH1() //pa4
 	  */
 	  sConfig.Channel = ADC_CHANNEL_4;
 	  sConfig.Rank = 1; //ADC_REGULAR_RANK_8
-	  sConfig.SamplingTime = ADC_SAMPLETIME_28CYCLES_5;
+	  sConfig.SamplingTime = ADC_SAMPLETIME_41CYCLES_5;
 	  if (HAL_ADC_ConfigChannel(&hadc1, &sConfig) != HAL_OK)
 	  {
 	    Error_Handler();
