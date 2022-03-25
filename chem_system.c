@@ -11,7 +11,7 @@ float pH_sense(void) //pa0
 {
 	float pH = 0.0;
 	pH = ((ADC_Average(0)*3.3)/4096);
-	pH = (4 +((pH-0.285)*2.0478)); //converts analog to a readable pH value
+	pH = (4 +((pH-1.999)*(-5.9406))); //converts analog to a readable pH value
 	return pH;
 }
 

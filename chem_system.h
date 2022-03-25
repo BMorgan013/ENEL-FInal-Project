@@ -16,7 +16,7 @@ extern "C" {
 #include "main.h"
 #include "adc_3channels.h"
 
-float pH_sense(void); //checks the ADC pin that the pH sensor is on PA0, then returns an analog value
+float pH_sense(void); //checks the ADC pin that the pH sensor is on PA0, then returns an analog value (5% PLUS/MINUS)
 float EC_sense(void); //returns the ADC value on PA4, corresponding to the EC sensor
 //AS OF NOW ONLY THE ABOVE 2 FUNCTIONS ARE BEING USED IN BASELINE PROJECT MODEL
 
