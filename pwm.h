@@ -15,11 +15,13 @@ extern "C" {
 #include "stm32f1xx_hal.h"
 #include "main.h"
 
-void shutter_motor_forwards(uint16_t delay); //function to turn on the shutter motor in the forward direction
+uint8_t shutter_motor_forwards(uint16_t delay); //function to turn on the shutter motor in the forward direction
 
-void shutter_motor_backwards(uint16_t delay);
+uint8_t shutter_motor_backwards(uint16_t delay);
 
 void light_bar(uint16_t lightvalue);
+
+void fans(uint16_t fanValue);
 
 #endif /* INC_PWM_H_ */
 

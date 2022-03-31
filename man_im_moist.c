@@ -6,6 +6,7 @@
  */
 
 #include "man_im_moist.h"
+#include "pwm.h"
 float moisture_level = 0.0; //moisture comparison variable
 uint16_t dry_boundary = 2500;
 uint16_t saturated_boundary = 2100;
@@ -47,13 +48,6 @@ float moisture_sense(void) //moisture sensing pb0, returns whatever pb0 is seein
 	return moisture; //returns the moisture level
 }
 
-float moisture_level_percentage(void) //returns the moisture level in percentage (2100-2500 moisture range)
-{
-	float moisture = 0;
-	moisture = (((ADC_Average(2))/2500)*100);
-	return moisture;
-}
-
 void flood_logic(void) //turn on flood pump if moisture needed
 {
 	moisture_level = moisture_sense(); //check the moisture level
@@ -77,15 +71,11 @@ void water_level_check(void) //PA12
 {
 	if (HAL_GPIO_ReadPin(GPIOA, GPIO_PIN_12)) //if pa12 is pulled low by the switch (switch open)
 	{
-		while (HAL_GPIO_ReadPin(GPIOA, GPIO_PIN_12)) //while the switch is still low (water level low)
-		{
-			rain_reservoir_ON(); //pump water into the tank from the rain reservoir
-		}
+		HAL_GPIO_WritePin(GPIOA, GPIO_PIN_8, GPIO_PIN_SET); //sets pa8 (rainwater pump) if water level is low
 	}
 	else
 	{
-		//do nothing
+		HAL_GPIO_WritePin(GPIOA, GPIO_PIN_8, GPIO_PIN_RESET); //resets pa8
 	}
-	rain_reservoir_OFF();
 }
 

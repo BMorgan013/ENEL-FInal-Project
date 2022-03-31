@@ -17,16 +17,13 @@ extern "C" {
 #include "adc_3channels.h"
 #include "chem_system.h"
 
-
-void rain_reservoir_ON(void);//turns on the rain reservoir pump on, PA8
-void rain_reservoir_OFF(void);//turns on the rain reservoir pump off, PA8
+void rain_reservoir_ON(void);
+void rain_reservoir_OFF(void);
 void flood_ON(void); //turns on the flood pump PC9
 void flood_OFF(void); //turns off the flood pump
 void be_like_water(void); //function responsible for powering the perpetually persistent pump to mix the reservoir
 void be_not_like_water(void); //turns off mixer
-
 float moisture_sense(void); //function responsible for moisture sensing
-float moisture_level_percentage(void);
 void flood_logic(void); //function responsible for decision making with the moisture level
 void water_level_check(void); /*checks the status of the water level switch on PA12
 if the water level switch is open, this means that the water level is low, beneath the switch
