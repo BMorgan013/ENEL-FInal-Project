@@ -17,7 +17,7 @@ uint8_t shutter_motor_forwards(uint16_t delay) //forwards is on timer 3, channel
 	HAL_GPIO_WritePin(GPIOB, GPIO_PIN_5, GPIO_PIN_SET);
 	HAL_Delay(delay);
 	HAL_GPIO_WritePin(GPIOB, GPIO_PIN_5, GPIO_PIN_RESET);
-	uint8_t shutter_status = 1; //1 means shutter is now covering the plant
+	shutter_status = 1; //1 means shutter is now covering the plant
 	return shutter_status;
 }
 
@@ -27,7 +27,7 @@ uint8_t shutter_motor_backwards(uint16_t delay) //backwards is on timer 3, chann
 	HAL_GPIO_WritePin(GPIOB, GPIO_PIN_4, GPIO_PIN_SET);
 	HAL_Delay(delay);
 	HAL_GPIO_WritePin(GPIOB, GPIO_PIN_4, GPIO_PIN_RESET);
-	uint8_t shutter_status = 0; //0 means shutter is now retracted
+	shutter_status = 0; //0 means shutter is now retracted
 	return shutter_status;
 }
 
