@@ -9,11 +9,11 @@ import serial
 from time import gmtime, strftime
 
 
-#Configuration Values for AWS RDS MySQL, left blank
-endpoint = ''
+#Configuration Values for AWS RDS MySQL, username and password left blank
+endpoint = 'enggcap.c1hu9mfpb5qx.us-east-1.rds.amazonaws.com'
 username = ''
 password = ''
-database_name = ''
+database_name = 'plantAttributes'
 port = '3306'
 
 conn = pymysql.connect(
