@@ -2,11 +2,11 @@ import pymysql
 import time
 import serial
 from datetime import datetime
-#Configuration Values, left empty
-endpoint = ''
+#Configuration Values,username and password left empty
+endpoint = 'enggcap.c1hu9mfpb5qx.us-east-1.rds.amazonaws.com'
 username = ''
 password = ''
-database_name = ''
+database_name = 'enggcap.c1hu9mfpb5qx.us-east-1.rds.amazonaws.com'
 port = '3306'
 
 conn = pymysql.connect(
