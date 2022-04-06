@@ -1,0 +1,170 @@
+<h2>Temperature</h2>
+<div style="overflow:auto; height:360px;">
+            <table class="u-full-width">
+              <thead>
+                <tr>
+                  <th>Date</th>
+                  <th>&deg;C</th>
+                </tr>
+              </thead>
+              <tbody>
+                {% for row in tempRange %}
+                <tr>
+                  <td>{{row[0]}}</td>
+                  <td>{{'%0.1f'|format(row[1])}}</td>
+                </tr>
+                {% endfor %}
+              </tbody>
+            </table>
+</div><br>
+ <h2>Humidity</h2>
+<div style="overflow:auto; height:360px;">
+            <table class="u-full-width">
+              <thead>
+                <tr>
+                  <th>Date</th>
+                  <th>%</th>
+                </tr>
+              </thead>
+              <tbody>
+                {% for row in humRange %}
+                <tr>
+                  <td>{{row[0]}}</td>
+                  <td>{{'%0.1f'|format(row[1])}}</td>
+                </tr>
+                {% endfor %}
+              </tbody>
+</table>
+</div><br>
+<h2>pH</h2>
+<div style="overflow:auto; height: 360px">
+            <table class="u-full-width">
+              <thead>
+                <tr>
+                  <th>Date</th>
+                  <th>&deg;C</th>
+                </tr>
+              </thead>
+              <tbody>
+  {% for row in phRange %}
+                <tr>
+                  <td>{{row[0]}}</td>
+                  <td>{{'%0.1f'|format(row[1])}}</td>
+                </tr>
+                {% endfor %}
+              </tbody>
+            </table>
+</div><br>
+
+            <h3>Electrical Conductivity</h3>
+	<div style="overflow:auto; height: 360px">
+
+            <table class="u-full-width">
+              <thead>
+                <tr>
+                  <th>Date</th>
+                  <th>mS/cm</th>
+                </tr>
+              </thead>
+              <tbody>
+                {% for row in ecRange %}
+                <tr>
+                  <td>{{row[0]}}</td>
+                  <td>{{'%0.1f'|format(row[1])}}</td>
+                </tr>
+                {% endfor %}
+              </tbody>
+            </table>
+</div><br>
+<h2>Moisture</h2>
+<div style="overflow:auto; height: 360px">
+
+  <table class="u-full-width">
+              <thead>
+                <tr>
+                  <th>Date</th>
+                  <th>%</th>
+                </tr>
+              </thead>
+              <tbody>
+                {% for row in moistRange %}
+                <tr>
+                  <td>{{row[0]}}</td>
+                  <td>{{'%0.1f'|format(row[1])}}</td>
+                </tr>
+                {% endfor %}
+              </tbody>
+            </table>
+</div><br>
+<h2>Light Intensity</h2>
+<div style="overflow:auto; height:360px;">
+            <table class="u-full-width">
+              <thead>
+                <tr>
+                  <th>Date</th>
+                  <th>lux</th>
+                </tr>
+              </thead>
+              <tbody>
+                {% for row in luxRange %}
+                <tr>
+                  <td>{{row[0]}}</td>
+                  <td>{{'%0.1f'|format(row[1])}}</td>
+                </tr>
+                {% endfor %}
+              </tbody>
+            </table>
+</div>
+
+
+
+<!-- Google Charts HTML-->
+      <div class="two-thirds column" style="margin-top: 5%">
+        <div class="row">
+          <div class="row">
+            <div class="three columns">
+              <div id="chart_temps"></div>
+              <div id="chart_humid"></div>
+            </div>
+          </div>
+        </di>
+      </div>
+</div>
+
+
+      <script>
+       google.load('visualization', '1', {packages: ['corechart']});
+    google.setOnLoadCallback(drawChart);
+
+    function drawChart() {
+
+      var data = new google.visualization.DataTable();
+      data.addColumn('datetime', 'Time');
+      data.addColumn('number', 'Temperature');
+      data.addRows([
+          {% for row in chartTempRange %}
+            [new Date({{row[0][0:4]}},{{row[0][5:7]}}-1,{{row[0][8:10]}},{{row[0][11:13]}},{{row[0][14:16]}}),{{'%0.2f'|format(row[1])}}],
+          {% endfor %}
+        ]);
+
+      var options = {
+        width: 600,
+        height: 563,
+        hAxis: {
+          title: "Date",
+          gridlines: { count: {{chartTemp_items}}, color: '#CCC' },
+          format: 'dd-MMM-yyyy HH:mm' },
+        vAxis: {
+          title: 'Degrees'
+        },
+        title: 'Temperature',
+        curveType: 'function'  //Makes line curved
+      };
+
+      var chart = new google.visualization.LineChart(document.getElementById('chart_temps'));
+
+      chart.draw(data, options);
+
+    }
+
+      </script>
