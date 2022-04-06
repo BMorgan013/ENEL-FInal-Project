@@ -6,7 +6,7 @@ from datetime import datetime
 endpoint = 'enggcap.c1hu9mfpb5qx.us-east-1.rds.amazonaws.com'
 username = ''
 password = ''
-database_name = 'enggcap.c1hu9mfpb5qx.us-east-1.rds.amazonaws.com'
+database_name = 'plantAttributes'
 port = '3306'
 
 conn = pymysql.connect(
