@@ -1,7 +1,14 @@
+#######################################
+# UNIVERSITY OF REGINA FACULTY OF APPLIED SCIENCE & ENGINEERING
+# Title: Group 5 - Automated Greenhouse System Capstone
+#######################################
+
+#libraries 
 import pymysql
 import time
 import serial
 from datetime import datetime
+
 #Configuration Values,username and password left empty
 endpoint = 'enggcap.c1hu9mfpb5qx.us-east-1.rds.amazonaws.com'
 username = ''
@@ -15,6 +22,7 @@ conn = pymysql.connect(
 	password = password,
 	db = database_name,
 	)
+
 #used to write to serial port, xbee s2c
 ser = serial.Serial(
     port='/dev/ttyUSB0',
@@ -24,27 +32,35 @@ ser = serial.Serial(
     bytesize=serial.EIGHTBITS,
     timeout=1            
  )
-counter=0
 
-#Grab last entered info from plantChoice table in the db
-count=1
-while(count<=2):
+#Grab last entered info from plantchoice table in the db, test code
+#count=1
+#while(count<=2):
+#      curs=conn.cursor()
+#      curs.execute("SET time_zone='Canada/Saskatchewan'")
+#      curs.execute("SELECT plant FROM plantchoice ORDER BY rDateTime DESC LIMIT 1")
+#      plantChoice = curs.fetchall()
+	
+#      for plant in plantChoice:
+#        plantString = plant[0]
+#        print("User chose: ", plantString)
+#      time.sleep(2)
+#      count+=1
+
+#read plantchoice, send associated letter to STM32
+while 1:
+      x=ser.readline().strip()
+#      print(x, len(x))
+
       curs=conn.cursor()
       curs.execute("SET time_zone='Canada/Saskatchewan'")
       curs.execute("SELECT plant FROM plantchoice ORDER BY rDateTime DESC LIMIT 1")
       plantChoice = curs.fetchall()
-
+	
       for plant in plantChoice:
         plantString = plant[0]
         print("User chose: ", plantString)
-      time.sleep(2)
-      count+=1
 
-###############
-#read plantChoice, send associated letter to STM32
-while 1:
-      x=ser.readline().strip()
-#      print(x, len(x))
       if plantString == 'tomatoes outdoors':
         ser.write(str.encode('A'))
       elif plantString == 'sunflowers outdoors':
@@ -59,6 +75,7 @@ while 1:
         ser.write(str.encode('F'))
       else:
         print("No info on database")
+	
 #Receive data from STM32, count length of string, send to db
       if len(x) == 4:
        print("Humidity: ",x, len(x))
