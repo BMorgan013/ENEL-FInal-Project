@@ -1,3 +1,9 @@
+#######################################
+# UNIVERSITY OF REGINA FACULTY OF APPLIED SCIENCE & ENGINEERING
+# Title: Group 5 - Automated Greenhouse System Capstone
+#######################################
+
+#libraries
 from flask import Flask
 from flask import render_template, redirect, url_for, request,jsonify, flash
 
@@ -41,6 +47,7 @@ def choice():
 	curs.execute("INSERT INTO plantchoice (plant) VALUES (%s)", (plantChoice))
 	conn.commit()
 
+	#MySQL queries, pulling info from the cloud, showing information to the web interface
 	curs.execute("SELECT date_format(rDateTime,'%Y-%m-%d %H:%i') AS dateToString, temp FROM temperatures")
 	temperatures = curs.fetchall()
 	curs.execute("SELECT date_format(rDateTime, '%Y-%m-%d %H:%i') AS dateToString, hum FROM humidities")
@@ -82,7 +89,7 @@ def range():
 
 	  return jsonify({'htmlresponse': render_template("response.html", tempRange=temperaturesRange, humRange=humiditiesRange, phRange=phRange, ecRange=ecRange, moistRange=moistRange, luxRange=luxRange)})
 
-#main landing page for testing
+#main landing page used for testing
 @app.route("/lab_env_db")
 def lab_env_db():
 
