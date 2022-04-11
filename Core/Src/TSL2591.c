@@ -1,4 +1,10 @@
 /*****************************************************************************
+UNIVERSITY OF REGINA FACULTY OF APPLIED SCIENCE & ENGINEERING
+Title: Group 5 - Automated Greenhouse System Capstone
+Link: https://github.com/waveshare/TSL2591X-Light-Sensor
+Comments: We are using the manufacturer's library for this our TSL2591 sensor
+******************************************************************************/
+/*****************************************************************************
 * | File      	:   TSL2591.c
 * | Author      :   Waveshare team
 * | Function    :   TSL2591 driver
