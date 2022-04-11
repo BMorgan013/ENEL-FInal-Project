@@ -1,4 +1,9 @@
 /* USER CODE BEGIN Header */
+/*****************************************************************************
+UNIVERSITY OF REGINA FACULTY OF APPLIED SCIENCE & ENGINEERING
+Title: Group 5 - Automated Greenhouse System Capstone
+Comments: main.c
+******************************************************************************/
 /**
   ******************************************************************************
   * @file           : main.c
