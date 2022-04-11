@@ -1,0 +1,434 @@
+<!DOCTYPE html>
+<!--
+#######################################
+# UNIVERSITY OF REGINA FACULTY OF APPLIED SCIENCE & ENGINEERING
+# Title: Group 5 - Automated Greenhouse System Capstone
+#######################################
+-->
+
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <title>Automated Greenhouse Project</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="//fonts.googleapis.com/css?family=Raleway:400,300,600" rel="stylesheet" type="text/css">
+    <link rel="stylesheet" href="/static/css/normalize.css">
+    <link rel="stylesheet" href="/static/css/skeleton.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.css"/>
+    <link rel="icon" type="image/png" href="/static/images/">
+  </head>
+  <body>
+    <div class="container">
+<div class="row">
+<h1> You are planting {{plantChoice}}.</h1><br>
+          <strong>Choose your date range.</strong><br>
+<input type="text" name="From" id="From" class="form-control" placeholder="From Date"/>
+<input type="text" name="to" id="to" class="form-control" placeholder="To Date"/>
+<input type="button" name="range" id="range" value="Range" style="background-color: #90EE90"/></div>
+      <div class="row">
+        <div class="one-third column" style="margin-top: 5%">      
+          <div id="date_range">
+          <h2>Temperature</h2>           
+<div style="overflow:auto; height:360px;">
+         
+            <table class="u-full-width">
+              <thead>
+                <tr>
+                  <th>Date</th>
+                  <th>&deg;C</th>                        
+                </tr>
+              </thead>
+              <tbody>
+                {% for row in temp %}
+                <tr>
+                  <td>{{row[0]}}</td>
+                  <td>{{'%0.1f'|format(row[1])}}</td>
+                </tr>
+                {% endfor %}
+              </tbody>
+            </table>  
+	</div><br>
+            <h2>Humidity</h2>
+<div style="overflow:auto; height:360px;">
+
+            <table class="u-full-width">
+              <thead>
+                <tr>
+                  <th>Date</th>
+                  <th>%</th>                        
+                </tr>
+              </thead>
+              <tbody>
+                {% for row in hum %}
+                <tr>
+                  <td>{{row[0]}}</td>
+                  <td>{{'%0.1f'|format(row[1])}}</td>
+                </tr>          
+                {% endfor %}
+              </tbody>
+            </table>  
+</div>                                            
+<h2>pH</h2>
+<div style="overflow:auto; height:360px;">
+            <table class="u-full-width">
+              <thead>
+                <tr>
+                  <th>Date</th>
+                  <th>pH</th>
+                </tr>
+              </thead>
+              <tbody>
+  {% for row in ph %}
+                <tr>
+                  <td>{{row[0]}}</td>
+                  <td>{{'%0.1f'|format(row[1])}}</td>
+                </tr>
+                {% endfor %}
+              </tbody>
+            </table>
+</div><br>
+            <h3>Electrical Conductivity</h3>
+<div style="overflow:auto; height:360px;">
+            <table class="u-full-width">
+              <thead>
+                <tr>
+                  <th>Date</th>
+                  <th>mS/cm</th>
+                </tr>
+              </thead>
+              <tbody>
+                {% for row in ec %}
+                <tr>
+                  <td>{{row[0]}}</td>
+                  <td>{{'%0.1f'|format(row[1])}}</td>
+                </tr>
+                {% endfor %}
+              </tbody>
+            </table>
+</div><br>
+<h2>Moisture</h2>
+<div style="overflow:auto; height:360px;">
+            <table class="u-full-width">
+              <thead>
+                <tr>
+                  <th>Date</th>
+                  <th>%</th>
+                </tr>
+              </thead>
+              <tbody>
+                {% for row in moist %}
+                <tr>
+                  <td>{{row[0]}}</td>
+                  <td>{{'%0.1f'|format(row[1])}}</td>
+                </tr>
+                {% endfor %}
+              </tbody>
+            </table>
+</div><br>
+<h2>Light Intensity</h2>
+<div style="overflow:auto; height:360px;">
+            <table class="u-full-width">
+              <thead>
+                <tr>
+                  <th>Date</th>
+                  <th>lux</th>
+                </tr>
+              </thead>
+              <tbody>
+                {% for row in lux %}
+                <tr>
+                  <td>{{row[0]}}</td>
+                  <td>{{'%0.1f'|format(row[1])}}</td>
+                </tr>
+                {% endfor %}
+              </tbody>
+            </table>
+</div>
+        </div>
+</div>
+<!-- Google Charts HTML -->
+      <div class="two-thirds column" style="margin-top: 5%">
+        <div class="row">                  
+          <div class="row">
+            <div class="three columns">
+              <div id="chart_temps"></div>
+              <div id="chart_humid"></div>
+	      <div id="chart_ph"></div>
+	      <div id="chart_ec"></div>	
+	      <div id="chart_moist"></div>
+	      <div id="chart_lux"></div>
+            </div>
+          </div>
+        </div>     
+      </div>
+</div>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.js"></script>           
+
+<!-- Date Range Script -->
+<script>
+$(document).ready(function(){
+    $.datepicker.setDefaults({
+        dateFormat: 'yy-mm-dd'
+    });
+    $(function(){
+        $("#From").datepicker();
+        $("#to").datepicker();
+    });
+    $('#range').click(function(){
+        var From = $('#From').val();
+        var to = $('#to').val();
+        if(From != '' && to != '')
+        {
+            $.ajax({
+                url:"/range",
+                method:"POST",
+                data:{From:From, to:to},
+                success:function(data)
+                {
+                    $('#date_range').html(data);
+		$('#date_range').append(data.htmlresponse);
+                }
+            });
+        }
+        else
+        {
+            alert("Please Select the Date");
+        }
+    });
+});
+</script>
+
+<!-- Google Graphs script -->
+     <script type="text/javascript" src="https://www.google.com/jsapi?autoload={'modules':[{'name':'visualization','version':'1','packages':['corechart']}]}"></script>
+
+      <script>
+       google.load('visualization', '1', {packages: ['corechart']});
+    google.setOnLoadCallback(drawChart);
+    function drawChart() {
+
+      var data = new google.visualization.DataTable();
+      data.addColumn('datetime', 'Time');
+      data.addColumn('number', 'Temperature');
+      data.addRows([
+          {% for row in temp %}
+    	[new Date({{row[0][0:4]}},{{row[0][5:7]}}-1,{{row[0][8:10]}},{{row[0][11:13]}},{{row[0][14:16]}}),
+	{{'%0.2f'|format(row[1])}}],
+	{% endfor %}
+	]);
+
+      var options = {
+        width: 500,
+        height: 463,
+        hAxis: {
+          title: "Date",
+          gridlines: { count: {{temp_items}}, color: '#CCC' },
+          format: 'YYYY-MM-DD HH:MM' },
+        vAxis: {
+          title: 'Degrees'
+        },
+        title: 'Temperature',
+        curveType: 'function',
+	legend:{ position: 'bottom'}
+      };
+
+      var chart = new google.visualization.LineChart(document.getElementById('chart_temps'));
+
+      chart.draw(data, options);
+
+    }
+      </script>
+
+<script>
+    google.load('visualization', '1', {packages: ['corechart']});
+    google.setOnLoadCallback(drawChart);
+
+    function drawChart() {
+
+      var data = new google.visualization.DataTable();
+      data.addColumn('datetime', 'Time');
+      data.addColumn('number', 'Humidity');
+      data.addRows([
+          {% for row in hum %}
+            [new Date({{row[0][0:4]}},{{row[0][5:7]}}-1,{{row[0][8:10]}},{{row[0][11:13]}},{{row[0][14:16]}}),{{'%0.2f'|format(row[1])}}],
+          {% endfor %}
+        ]);
+
+      var options = {
+        width: 500,
+        height: 463,
+        hAxis: {
+          title: "Date",
+          gridlines: { count: {{hum_items}}, color: '#CCC' },
+          format: 'dd-MMM-yyyy HH:mm'        },
+        vAxis: {
+          title: 'Percent'
+        },
+        title: 'Humidity',
+        curveType: 'function',
+	legend:{ position: 'bottom'}
+      };
+
+      var chart = new google.visualization.LineChart(document.getElementById('chart_humid'));
+
+      chart.draw(data, options);
+
+    }
+
+      </script>
+
+<script>
+    google.load('visualization', '1', {packages: ['corechart']});
+    google.setOnLoadCallback(drawChart);
+
+    function drawChart() {
+
+      var data = new google.visualization.DataTable();
+      data.addColumn('datetime', 'Time');
+      data.addColumn('number', 'pH');
+      data.addRows([
+          {% for row in ph %}
+            [new Date({{row[0][0:4]}},{{row[0][5:7]}}-1,{{row[0][8:10]}},{{row[0][11:13]}},{{row[0][14:16]}}),{{'%0.2f'|format(row[1])}}],
+          {% endfor %}
+        ]);
+
+      var options = {
+        width: 500,
+        height: 463,
+        hAxis: {
+          title: "Date",
+          gridlines: { count: {{ph_items}}, color: '#CCC' },
+          format: 'dd-MMM-yyyy HH:mm'        },
+        vAxis: {
+          title: 'pH'
+        },
+        title: 'pH',
+        curveType: 'function', 
+	legend:{ position: 'bottom'}
+      };
+
+      var chart = new google.visualization.LineChart(document.getElementById('chart_ph'));
+
+      chart.draw(data, options);
+
+    }
+
+      </script>
+<script>
+    google.load('visualization', '1', {packages: ['corechart']});
+    google.setOnLoadCallback(drawChart);
+
+    function drawChart() {
+
+      var data = new google.visualization.DataTable();
+      data.addColumn('datetime', 'Time');
+      data.addColumn('number', 'EC');
+      data.addRows([
+          {% for row in ec %}
+            [new Date({{row[0][0:4]}},{{row[0][5:7]}}-1,{{row[0][8:10]}},{{row[0][11:13]}},{{row[0][14:16]}}),{{'%0.2f'|format(row[1])}}],
+          {% endfor %}
+        ]);
+
+      var options = {
+        width: 500,
+        height: 463,
+        hAxis: {
+          title: "Date",
+          gridlines: { count: {{ec_items}}, color: '#CCC' },
+          format: 'dd-MMM-yyyy HH:mm'        },
+        vAxis: {
+          title: 'Millisiemens/cm'
+        },
+        title: 'Electrical Conductivity',
+        curveType: 'function',
+	legend:{ position: 'bottom'}
+      };
+
+      var chart = new google.visualization.LineChart(document.getElementById('chart_ec'));
+
+      chart.draw(data, options);
+
+    }
+
+      </script>
+<script>
+    google.load('visualization', '1', {packages: ['corechart']});
+    google.setOnLoadCallback(drawChart);
+
+    function drawChart() {
+
+      var data = new google.visualization.DataTable();
+      data.addColumn('datetime', 'Time');
+      data.addColumn('number', 'Moisture');
+      data.addRows([
+          {% for row in moist %}
+            [new Date({{row[0][0:4]}},{{row[0][5:7]}}-1,{{row[0][8:10]}},{{row[0][11:13]}},{{row[0][14:16]}}),{{'%0.2f'|format(row[1])}}],
+          {% endfor %}
+        ]);
+
+      var options = {
+        width: 500,
+        height: 463,
+        hAxis: {
+          title: "Date",
+          gridlines: { count: {{moist_items}}, color: '#CCC' },
+          format: 'dd-MMM-yyyy HH:mm'        },
+        vAxis: {
+          title: '%'
+        },
+        title: 'Moisture',
+        curveType: 'function',
+	legend:{ position: 'bottom'}
+      };
+
+      var chart = new google.visualization.LineChart(document.getElementById('chart_moist'));
+
+      chart.draw(data, options);
+
+    }
+
+      </script>
+
+<script>
+    google.load('visualization', '1', {packages: ['corechart']});
+    google.setOnLoadCallback(drawChart);
+
+    function drawChart() {
+
+      var data = new google.visualization.DataTable();
+      data.addColumn('datetime', 'Time');
+      data.addColumn('number', 'lux');
+      data.addRows([
+          {% for row in lux %}
+           [new Date({{row[0][0:4]}},{{row[0][5:7]}}-1,{{row[0][8:10]}},{{row[0][11:13]}},{{row[0][14:16]}}),{{'%0.2f'|format(row[1])}}],
+          {% endfor %}
+
+      
+        ]);
+
+      var options = {
+        width: 500,
+        height: 463,
+        hAxis: {
+          title: "Date",
+          gridlines: { count: {{lux_items}}, color: '#CCC' },
+          format: 'dd-MMM-yyyy HH:mm'        },
+        vAxis: {
+          title: 'lux'
+        },
+        title: 'lux',
+        curveType: 'function',
+	legend:{ position: 'bottom'}
+      };
+
+      var chart = new google.visualization.LineChart(document.getElementById('chart_lux'));
+
+chart.draw(data, options);
+
+    }
+
+      </script>
+
+
+</body>
+</html>
