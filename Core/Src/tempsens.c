@@ -1,9 +1,10 @@
-/*
- * tempsens.c
- *
- *  Created on: Mar 9, 2022
- *      Author: klaudius
- */
+/*****************************************************************************
+UNIVERSITY OF REGINA FACULTY OF APPLIED SCIENCE & ENGINEERING
+Title: Group 5 - Automated Greenhouse System Capstone
+Link: https://www.micropeta.com/video48
+Datasheet: https://cdn-shop.adafruit.com/datasheets/Digital+humidity+and+temperature+sensor+AM2302.pdf
+Comments: We are using Nizar Mohideen's DHT22 library from MicroPeta
+******************************************************************************/
 
 #include "stm32f1xx_hal.h"
 #include "tempsens.h"
